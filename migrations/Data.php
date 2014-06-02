@@ -1,8 +1,14 @@
 <?php
 class Data {
-	public static function up() {
-		$table = \Asgard\Core\App::get('config')->get('database/prefix').'data';
-		\Asgard\Core\App::get('schema')->create($table, function($table) {	
+	protected $app;
+
+	public function __construct($app) {
+		$this->app = $app;
+	}
+
+	public function up() {
+		$table = $this->app['config']->get('database/prefix').'data';
+		$this->app['schema']->create($table, function($table) {	
 			$table->add('id', 'int(11)')
 				->autoincrement()
 				->primary();	
@@ -17,7 +23,7 @@ class Data {
 		});
 	}
 	
-	public static function down() {
-		\Asgard\Core\App::get('schema')->drop(\Asgard\Core\App::get('config')->get('database/prefix').'data');
+	public function down() {
+		$this->app['schema']->drop(\Asgard\Core\App::get('config')->get('database/prefix').'data');
 	}
 }
