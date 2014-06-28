@@ -2,19 +2,22 @@
 namespace Asgard\Data\Tests;
 
 class DataTest extends \PHPUnit_Framework_TestCase {
-	public static function setUpBeforeClass() {
-		if(!defined('_ENV_'))
-			define('_ENV_', 'test');
-		\Asgard\Core\App::instance(true)->config->set('bundles', array(
-			new \Asgard\Db\Bundle
-		))->set('bundlesdirs', array());
-		\Asgard\Core\App::loadDefaultApp(false);
+	protected static $db;
 
-		$table = \Asgard\Core\App::get('config')->get('database/prefix').'data';
+	public static function setUpBeforeClass() {
+		static::$db = $db = new \Asgard\Db\DB([
+			'host' => 'localhost',
+			'username' => 'root',
+			'password' => '',
+			'database' => 'asgard'
+		]);
+		$schema = new \Asgard\Db\Schema($db);
+
+		$table = 'data';
 		try {
-			\Asgard\Core\App::get('schema')->drop($table);
+			$schema->drop($table);
 		} catch(\Exception $e) {}
-		\Asgard\Core\App::get('schema')->create($table, function($table) {	
+		$schema->create($table, function($table) {	
 			$table->add('id', 'int(11)')
 				->autoincrement()
 				->primary();	
@@ -29,8 +32,8 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 		});
 	}
 
-	public function test1() {
-		$data = new \Asgard\Data\Data;
+	public function test() {
+		$data = new \Asgard\Data\Data(static::$db);
 
 		$this->assertEquals(null, $data->get('foo'));
 
@@ -55,6 +58,17 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 		$bar->name = 'bob';
 		$data->set('test', $bar, 'bar');
 		$this->assertEquals($bar, $data->get('test'));
+
+		$this->assertEquals($bar, $data['test']);
+		$this->assertTrue(isset($data['test']));
+		$this->assertTrue($data->has('test'));
+		$data->delete('test');
+		$this->assertFalse($data->has('test'));
+
+		$data['test'] = 'abc';
+		$this->assertEquals('abc', $data['test']);
+		unset($data['test']);
+		$this->assertFalse(isset($data['test']));
 	}
 }
 

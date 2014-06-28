@@ -1,13 +1,7 @@
 <?php
-class Data {
-	protected $app;
-
-	public function __construct($app) {
-		$this->app = $app;
-	}
-
+class Data extends \Asgard\Migration\DBMigration {
 	public function up() {
-		$table = $this->app['config']->get('database/prefix').'data';
+		$table = $this->app['config']['database.prefix'].'data';
 		$this->app['schema']->create($table, function($table) {	
 			$table->add('id', 'int(11)')
 				->autoincrement()
@@ -24,6 +18,6 @@ class Data {
 	}
 	
 	public function down() {
-		$this->app['schema']->drop(\Asgard\Core\App::get('config')->get('database/prefix').'data');
+		$this->app['schema']->drop($this->app['config']['database.prefix'].'data');
 	}
 }

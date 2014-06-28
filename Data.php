@@ -7,7 +7,7 @@ namespace Asgard\Data;
  * @author Michel Hognerud <michel@hognerud.net>
 */
 class Data implements \ArrayAccess {
-	protected $types=array();
+	protected $types=[];
 	protected $db;
 	
 	/**
@@ -77,7 +77,7 @@ class Data implements \ArrayAccess {
 		$this->types[$type] = array($serializeCb, $unserializeCb);
 	}
 
-	public function has() {
+	public function has($key) {
 		$dal = new \Asgard\Db\Dal($this->db);
 		$row = $dal->from('data')->where('key', $key)->first();
 		return isset($row['value']);
