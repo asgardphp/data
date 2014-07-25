@@ -7,7 +7,7 @@ namespace Asgard\Data;
  * @author Michel Hognerud <michel@hognerud.net>
 */
 class Bundle extends \Asgard\Core\BundleLoader {
-	public function buildApp($app) {
-		$app->register('data', function($app) { return new Data($app->get('db')); } );
+	public function buildApp($container) {
+		$container->register('data', function($container) { return new Data($container->get('db')); } );
 	}
 }
