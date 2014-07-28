@@ -29,7 +29,7 @@ class Data implements \ArrayAccess {
 	 * @api 
 	*/
 	public function get($key) {
-		$dal = new \Asgard\Db\Dal($this->db);
+		$dal = new \Asgard\Db\DAL($this->db);
 		$row = $dal->from('data')->where('key', $key)->first();
 		if(isset($row['value'])) {
 			$res = unserialize($row['value']);
@@ -59,7 +59,7 @@ class Data implements \ArrayAccess {
 				'input' => $this->types[$type][0]($value)
 			));
 		}
-		$dal = new \Asgard\Db\Dal($this->db);
+		$dal = new \Asgard\Db\DAL($this->db);
 		if(!$dal->from('data')->where('key', $key)->update(array('value'=>$res)))
 			$dal->into('data')->insert(array('key'=>$key, 'value'=>$res));
 	}
@@ -78,13 +78,13 @@ class Data implements \ArrayAccess {
 	}
 
 	public function has($key) {
-		$dal = new \Asgard\Db\Dal($this->db);
+		$dal = new \Asgard\Db\DAL($this->db);
 		$row = $dal->from('data')->where('key', $key)->first();
 		return isset($row['value']);
 	}
 
 	public function delete($key) {
-		$dal = new \Asgard\Db\Dal($this->db);
+		$dal = new \Asgard\Db\DAL($this->db);
 		$dal->from('data')->where('key', $key)->delete();
 	}
 
