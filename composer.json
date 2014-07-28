@@ -8,7 +8,7 @@
 	}],
 	"require": {
         "php": ">=5.4.0",
-        "asgard/asgard": "@dev"
+        "asgard/db": "@dev"
 	},
     "autoload": {
         "psr-4": {"Asgard\\Data\\": "."}
