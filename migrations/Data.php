@@ -2,10 +2,10 @@
 class Data extends \Asgard\Migration\DBMigration {
 	public function up() {
 		$table = $this->container['config']['database.prefix'].'data';
-		$this->container['schema']->create($table, function($table) {	
+		$this->container['schema']->create($table, function($table) {
 			$table->add('id', 'int(11)')
 				->autoincrement()
-				->primary();	
+				->primary();
 			$table->add('created_at', 'datetime')
 				->nullable();
 			$table->add('updated_at', 'datetime')
@@ -16,7 +16,7 @@ class Data extends \Asgard\Migration\DBMigration {
 				->nullable();
 		});
 	}
-	
+
 	public function down() {
 		$this->container['schema']->drop($this->container['config']['database.prefix'].'data');
 	}

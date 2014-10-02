@@ -17,10 +17,10 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 		try {
 			$schema->drop($table);
 		} catch(\Exception $e) {}
-		$schema->create($table, function($table) {	
+		$schema->create($table, function($table) {
 			$table->add('id', 'int(11)')
 				->autoincrement()
-				->primary();	
+				->primary();
 			$table->add('created_at', 'datetime')
 				->nullable();
 			$table->add('updated_at', 'datetime')
