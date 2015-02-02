@@ -6,10 +6,8 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 
 	public static function setUpBeforeClass() {
 		static::$db = $db = new \Asgard\Db\DB([
-			'host' => 'localhost',
-			'username' => 'root',
-			'password' => '',
-			'database' => 'asgard'
+			'driver' => 'sqlite',
+			'database' => ':memory:'
 		]);
 		$schema = new \Asgard\Db\Schema($db);
 
@@ -18,17 +16,17 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 			$schema->drop($table);
 		} catch(\Exception $e) {}
 		$schema->create($table, function($table) {
-			$table->add('id', 'int(11)')
-				->autoincrement()
-				->primary();
-			$table->add('created_at', 'datetime')
-				->nullable();
-			$table->add('updated_at', 'datetime')
-				->nullable();
-			$table->add('key', 'varchar(255)')
-				->nullable();
-			$table->add('value', 'text')
-				->nullable();
+			$table->addColumn('id', 'integer', [
+				'length' => 11,
+			]);
+			$table->addColumn('created_at', 'datetime', [
+			]);
+			$table->addColumn('updated_at', 'datetime', [
+			]);
+			$table->addColumn('key', 'string', [
+			]);
+			$table->addColumn('value', 'text', [
+			]);
 		});
 	}
 

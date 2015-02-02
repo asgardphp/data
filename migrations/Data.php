@@ -3,17 +3,17 @@ class Data extends \Asgard\Migration\DBMigration {
 	public function up() {
 		$table = $this->container['config']['database.prefix'].'data';
 		$this->container['schema']->create($table, function($table) {
-			$table->add('id', 'int(11)')
-				->autoincrement()
-				->primary();
-			$table->add('created_at', 'datetime')
-				->nullable();
-			$table->add('updated_at', 'datetime')
-				->nullable();
-			$table->add('key', 'varchar(255)')
-				->nullable();
-			$table->add('value', 'text')
-				->nullable();
+			$table->addColumn('id', 'integer', [
+				'length' => 11,
+			]);
+			$table->addColumn('created_at', 'datetime', [
+			]);
+			$table->addColumn('updated_at', 'datetime', [
+			]);
+			$table->addColumn('key', 'string', [
+			]);
+			$table->addColumn('value', 'text', [
+			]);
 		});
 	}
 
