@@ -19,6 +19,11 @@ class Data implements \ArrayAccess {
 		$this->db = $db;
 	}
 
+	public function getTable() {
+		$prefix = isset($this->db->getConfig()['prefix']) ? $this->db->getConfig()['prefix']:'';
+		return $prefix.'data';
+	}
+
 	/**
 	 * Returns a value.
 	 *
@@ -29,7 +34,7 @@ class Data implements \ArrayAccess {
 	 * @api
 	*/
 	public function get($key) {
-		$row = $this->db->dal()->from('data')->where('key', $key)->first();
+		$row = $this->db->dal()->from($this->getTable())->where('key', $key)->first();
 		if(isset($row['value'])) {
 			$res = unserialize($row['value']);
 			if(isset($res['_dataType']) && isset($res['input']))
@@ -58,8 +63,8 @@ class Data implements \ArrayAccess {
 			));
 		}
 		$dal = $this->db->dal();
-		if(!$dal->from('data')->where('key', $key)->update(array('value'=>$res)))
-			$dal->into('data')->insert(array('key'=>$key, 'value'=>$res));
+		if(!$dal->from($this->getTable())->where('key', $key)->update(array('value'=>$res)))
+			$dal->into($this->getTable())->insert(array('key'=>$key, 'value'=>$res));
 	}
 
 	/**
@@ -76,12 +81,12 @@ class Data implements \ArrayAccess {
 	}
 
 	public function has($key) {
-		$row = $this->db->dal()->from('data')->where('key', $key)->first();
+		$row = $this->db->dal()->from($this->getTable())->where('key', $key)->first();
 		return isset($row['value']);
 	}
 
 	public function delete($key) {
-		$this->db->dal()->from('data')->where('key', $key)->delete();
+		$this->db->dal()->from($this->getTable())->where('key', $key)->delete();
 	}
 
 	public function offsetSet($offset, $value) {
