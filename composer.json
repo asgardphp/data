@@ -8,7 +8,8 @@
     }],
     "require": {
         "php": ">=5.4.0",
-        "asgard/db": "0.*"
+        "asgard/db": "0.*",
+        "doctrine/dbal": "2.*"
     },
     "autoload": {
         "psr-4": {"Asgard\\Data\\": "."}
