@@ -7,17 +7,16 @@
         "email": "michel@hognerud.net"
     }],
     "require": {
-        "php": ">=5.4.0",
-        "asgard/db": "0.*",
-        "doctrine/dbal": "2.*"
+        "php": ">=5.5.9",
+        "asgard/db": "~0.3.0",
+        "doctrine/dbal": "^2.0"
     },
     "autoload": {
         "psr-4": {"Asgard\\Data\\": "."}
     },
-    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "0.3-dev"
         }
     }
 }
